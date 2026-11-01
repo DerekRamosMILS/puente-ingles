@@ -1,0 +1,10 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno y secretos (nunca se suben)
+.env
+backend/db/crear-usuario-local.sql
+
+# Sistema
+.DS_Store
+*.log
