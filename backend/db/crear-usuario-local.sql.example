@@ -1,0 +1,15 @@
+-- ============================================================
+--  Puente · Preparación de MySQL LOCAL (se ejecuta una sola vez)
+--  1. Copia este archivo como crear-usuario-local.sql
+--  2. Cambia la contraseña (debe coincidir con DB_PASSWORD de .env)
+--  3. Ejecuta:  mysql -u root -p < db/crear-usuario-local.sql
+-- ============================================================
+
+CREATE DATABASE IF NOT EXISTS puente CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Usuario propio de la app, con permisos solo sobre la base "puente"
+CREATE USER IF NOT EXISTS 'puente_app'@'localhost' IDENTIFIED BY 'cambia_esta_contrasena';
+CREATE USER IF NOT EXISTS 'puente_app'@'127.0.0.1' IDENTIFIED BY 'cambia_esta_contrasena';
+GRANT ALL PRIVILEGES ON puente.* TO 'puente_app'@'localhost';
+GRANT ALL PRIVILEGES ON puente.* TO 'puente_app'@'127.0.0.1';
+FLUSH PRIVILEGES;

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Puente: catálogo de recursos gratuitos para aprender inglés, ordenados por nivel (A1 a C2) y por habilidad.">
+  <title>Puente | Recursos gratuitos para aprender inglés</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+
+  <!-- Fraunces para títulos y Atkinson Hyperlegible (diseñada para máxima legibilidad) para el texto -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/estilos.css">
+  <script type="module" src="js/catalogo.js"></script>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <!-- ========== BARRA SUPERIOR ========== -->
+  <header class="barra">
+    <div class="contenedor barra__contenido">
+      <a class="logo" href="index.html" aria-label="Puente, inicio">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 30 Q20 6 36 30" stroke-width="3.5"/><path d="M4 30h32" stroke-width="3.5"/>
+          <path d="M12 30v-9M20 30v-12M28 30v-9" stroke-width="2.6"/>
+        </svg>
+        Puente
+      </a>
+      <nav class="barra__nav" aria-label="Principal">
+        <a class="barra__enlace" href="index.html" aria-current="page">Catálogo</a>
+        <a class="boton boton--secundario boton--chico" href="login.html" id="enlace-sesion">Iniciar sesión</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <!-- ========== PORTADA ========== -->
+    <section class="contenedor portada" aria-labelledby="titulo-portada">
+      <div>
+        <p class="etiqueta-superior">Inglés sin costo · Villahermosa, Tabasco</p>
+        <h1 id="titulo-portada">Aprende inglés con recursos <em>gratuitos</em>, ordenados por nivel</h1>
+        <p class="portada__lema">Cursos, podcasts, lecturas y ejercicios que no cuestan nada. Elige tu nivel del Marco Común Europeo (de A1 a C2) y la habilidad que quieres practicar.</p>
+      </div>
+
+      <!-- Resumen por nivel: lo llena catalogo.js con datos de /api/recursos/estadisticas -->
+      <aside class="resumen-niveles" aria-labelledby="titulo-resumen">
+        <div class="resumen-niveles__total">
+          <span class="resumen-niveles__numero" id="total-recursos">–</span>
+          <h2 id="titulo-resumen" class="conteo">recursos en el catálogo</h2>
+        </div>
+        <dl class="resumen-niveles__barras" id="barras-niveles"></dl>
+      </aside>
+    </section>
+
+    <!-- ========== CATÁLOGO ========== -->
+    <section class="contenedor catalogo" aria-labelledby="titulo-catalogo">
+      <div class="catalogo__cabecera">
+        <h2 id="titulo-catalogo">Catálogo</h2>
+        <p class="conteo" id="conteo-resultados" aria-live="polite"></p>
+      </div>
+
+      <form class="filtros" id="filtros" role="search" aria-label="Filtrar recursos">
+        <div class="campo campo--busqueda">
+          <label for="filtro-q">Buscar</label>
+          <input type="search" id="filtro-q" name="q" maxlength="60" autocomplete="off" placeholder="Ej. podcast, grammar, BBC">
+        </div>
+        <div class="campo">
+          <label for="filtro-habilidad">Habilidad</label>
+          <select id="filtro-habilidad" name="habilidad"></select>
+        </div>
+        <div class="campo">
+          <label for="filtro-tipo">Tipo</label>
+          <select id="filtro-tipo" name="tipo"></select>
+        </div>
+        <div class="filtros__acciones">
+          <button type="reset" class="boton-texto">Limpiar filtros</button>
+        </div>
+      </form>
+
+      <!-- Filtro rápido por nivel (botones tipo chip) -->
+      <div class="niveles" id="chips-nivel" role="group" aria-label="Filtrar por nivel"></div>
+
+      <ul class="tarjetas" id="lista-recursos" aria-busy="true"></ul>
+      <div class="estado" id="estado" hidden></div>
+    </section>
+  </main>
+
+  <!-- ========== PIE ========== -->
+  <footer class="pie">
+    <div class="contenedor">
+      <p>&copy; 2026 Puente · Recursos gratuitos para aprender inglés.</p>
+      <p>Proyecto académico de Derek Joan Ramos del Ángel · Universidad Tecmilenio. Los enlaces llevan a sitios externos.</p>
+    </div>
+  </footer>
+</body>
+</html>

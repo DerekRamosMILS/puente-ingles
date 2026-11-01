@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Panel del equipo editorial de Puente para administrar los recursos del catálogo.">
+  <meta name="robots" content="noindex">
+  <title>Panel de recursos | Puente</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script type="module" src="js/panel.js"></script>
+</head>
+<body>
+  <a class="saltar" href="#contenido">Saltar al contenido</a>
+
+  <!-- ========== BARRA SUPERIOR ========== -->
+  <header class="barra">
+    <div class="contenedor barra__contenido">
+      <a class="logo" href="index.html" aria-label="Puente, ir al catálogo">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 30 Q20 6 36 30" stroke-width="3.5"/><path d="M4 30h32" stroke-width="3.5"/>
+          <path d="M12 30v-9M20 30v-12M28 30v-9" stroke-width="2.6"/>
+        </svg>
+        Puente
+      </a>
+      <nav class="barra__nav" aria-label="Principal">
+        <a class="barra__enlace" href="index.html">Catálogo público</a>
+        <div class="usuario">
+          <span class="usuario__avatar" id="usuario-avatar" aria-hidden="true">·</span>
+          <span class="usuario__datos">
+            <span class="usuario__nombre" id="usuario-nombre">Cargando…</span>
+            <span class="rol" id="usuario-rol"></span>
+          </span>
+        </div>
+        <button type="button" class="boton boton--secundario boton--chico" id="btn-salir">Cerrar sesión</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="contenedor panel">
+    <div class="panel__cabecera">
+      <div>
+        <h1>Panel de recursos</h1>
+        <p class="panel__permisos" id="texto-permisos"></p>
+      </div>
+      <button type="button" class="boton" id="btn-nuevo">+ Nuevo recurso</button>
+    </div>
+
+    <!-- Indicadores: los calcula panel.js con los datos de la API -->
+    <dl class="indicadores" id="indicadores" aria-live="polite"></dl>
+
+    <div class="panel__herramientas">
+      <div class="campo">
+        <label for="buscar-panel">Filtrar la tabla</label>
+        <input type="search" id="buscar-panel" placeholder="Título, nivel o habilidad" autocomplete="off">
+      </div>
+      <p class="conteo" id="conteo-panel" aria-live="polite"></p>
+    </div>
+
+    <div class="tabla-envoltura">
+      <table class="tabla">
+        <caption class="sr-only">Recursos registrados en el catálogo</caption>
+        <thead>
+          <tr>
+            <th scope="col">Recurso</th>
+            <th scope="col">Nivel y tipo</th>
+            <th scope="col">Actualizado</th>
+            <th scope="col"><span class="sr-only">Acciones</span></th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-tabla"></tbody>
+      </table>
+    </div>
+    <div class="estado" id="estado-panel" hidden></div>
+  </main>
+
+  <!-- ========== DIÁLOGO: CREAR / EDITAR ========== -->
+  <dialog class="dialogo" id="dialogo-recurso" aria-labelledby="titulo-dialogo">
+    <form id="form-recurso" novalidate>
+      <div class="dialogo__cabecera">
+        <h2 id="titulo-dialogo">Nuevo recurso</h2>
+        <button type="button" class="boton-icono" data-cerrar aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="dialogo__cuerpo">
+        <div class="alerta" id="alerta-form" role="alert" hidden></div>
+
+        <div class="campo">
+          <label for="titulo">Título</label>
+          <input type="text" id="titulo" name="titulo" maxlength="120" required aria-describedby="error-titulo">
+          <p class="campo__error" id="error-titulo"></p>
+        </div>
+
+        <div class="campo">
+          <label for="url">Enlace (URL)</label>
+          <input type="url" id="url" name="url" maxlength="255" required placeholder="https://" aria-describedby="error-url">
+          <p class="campo__error" id="error-url"></p>
+        </div>
+
+        <div class="campo">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" name="descripcion" maxlength="500" required aria-describedby="ayuda-descripcion error-descripcion"></textarea>
+          <p class="campo__ayuda" id="ayuda-descripcion"><span>¿Qué encontrará quien lo abra?</span><span id="contador-descripcion">0 / 500</span></p>
+          <p class="campo__error" id="error-descripcion"></p>
+        </div>
+
+        <div class="dialogo__fila">
+          <div class="campo">
+            <label for="nivel">Nivel</label>
+            <select id="nivel" name="nivel" required aria-describedby="error-nivel"></select>
+            <p class="campo__error" id="error-nivel"></p>
+          </div>
+          <div class="campo">
+            <label for="habilidad">Habilidad</label>
+            <select id="habilidad" name="habilidad" required aria-describedby="error-habilidad"></select>
+            <p class="campo__error" id="error-habilidad"></p>
+          </div>
+          <div class="campo">
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo" required aria-describedby="error-tipo"></select>
+            <p class="campo__error" id="error-tipo"></p>
+          </div>
+        </div>
+
+        <div class="dialogo__fila dialogo__fila--dos">
+          <div class="campo">
+            <label for="duracion_min">Duración sugerida (min)</label>
+            <input type="number" id="duracion_min" name="duracion_min" min="1" max="600" step="1" inputmode="numeric" aria-describedby="error-duracion_min">
+            <p class="campo__error" id="error-duracion_min"></p>
+          </div>
+          <label class="casilla">
+            <input type="checkbox" id="requiere_cuenta" name="requiere_cuenta">
+            Requiere crear una cuenta gratuita
+          </label>
+        </div>
+      </div>
+
+      <div class="dialogo__pie">
+        <button type="button" class="boton boton--secundario" data-cerrar>Cancelar</button>
+        <button type="submit" class="boton" id="btn-guardar">Guardar recurso</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ========== DIÁLOGO: CONFIRMAR ELIMINACIÓN ========== -->
+  <dialog class="dialogo dialogo--chico" id="dialogo-eliminar" aria-labelledby="titulo-eliminar" aria-describedby="texto-eliminar">
+    <div class="confirmar">
+      <h2 id="titulo-eliminar">¿Eliminar este recurso?</h2>
+      <p id="texto-eliminar"></p>
+      <div class="dialogo__pie">
+        <button type="button" class="boton boton--secundario" data-cerrar>Cancelar</button>
+        <button type="button" class="boton boton--peligro" id="btn-confirmar-eliminar">Sí, eliminar</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+</body>
+</html>

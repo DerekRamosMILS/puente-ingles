@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inicio de sesión del equipo editorial de Puente.">
+  <title>Iniciar sesión | Puente</title>
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/estilos.css">
+  <script type="module" src="js/login.js"></script>
+</head>
+<body class="pagina-login">
+  <main class="login">
+    <!-- Panel de marca (en celular se reduce a una franja) -->
+    <section class="login__marca" aria-label="Puente">
+      <a class="logo" href="index.html" aria-label="Puente, ir al catálogo">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">
+          <path d="M4 30 Q20 6 36 30" stroke-width="3.5"/><path d="M4 30h32" stroke-width="3.5"/>
+          <path d="M12 30v-9M20 30v-12M28 30v-9" stroke-width="2.6"/>
+        </svg>
+        Puente
+      </a>
+      <p class="login__frase">Aprender inglés no debería costar.</p>
+      <p class="login__texto">Desde aquí el equipo editorial agrega, corrige y retira recursos del catálogo. Cada cambio queda disponible al instante para quien está aprendiendo.</p>
+      <svg class="login__ilustracion" viewBox="0 0 460 170" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">
+        <path d="M10 120 Q230 -10 450 120" stroke-width="5"/>
+        <path d="M10 120h440" stroke-width="5"/>
+        <path d="M65 120V92M120 120V72M175 120V60M230 120V55M285 120V60M340 120V72M395 120V92" stroke-width="3" opacity=".8"/>
+        <path d="M10 146c25-12 50 12 75 0s50-12 75 0 50 12 75 0 50-12 75 0 50 12 75 0 40-8 55-4" stroke-width="2.5" opacity=".55"/>
+        <path d="M40 164c25-10 50 10 75 0s50-10 75 0 50 10 75 0 50-10 75 0 50 10 75 0" stroke-width="2" opacity=".35"/>
+      </svg>
+    </section>
+
+    <!-- Formulario -->
+    <section class="login__panel">
+      <div class="tarjeta-login">
+        <h1>Inicia sesión</h1>
+        <p class="tarjeta-login__intro">Acceso para el equipo editorial. Para consultar recursos no necesitas cuenta.</p>
+
+        <div class="alerta" id="alerta-login" role="alert" hidden></div>
+
+        <form id="form-login" novalidate>
+          <div class="campo">
+            <label for="correo">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" autocomplete="username" required
+                   placeholder="nombre@ejemplo.com" aria-describedby="error-correo">
+            <p class="campo__error" id="error-correo"></p>
+          </div>
+
+          <div class="campo">
+            <label for="password">Contraseña</label>
+            <div class="campo__con-boton">
+              <input type="password" id="password" name="password" autocomplete="current-password" required
+                     aria-describedby="error-password aviso-mayus">
+              <button type="button" class="boton-icono" id="mostrar-password" aria-label="Mostrar contraseña" aria-pressed="false"></button>
+            </div>
+            <p class="aviso-mayus" id="aviso-mayus" hidden>⚠ Bloq Mayús está activado</p>
+            <p class="campo__error" id="error-password"></p>
+          </div>
+
+          <button type="submit" class="boton boton--ancho" id="btn-entrar">Entrar</button>
+        </form>
+
+        <p class="tarjeta-login__pie"><a href="index.html">← Volver al catálogo público</a></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

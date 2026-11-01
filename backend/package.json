@@ -1,0 +1,33 @@
+{
+  "name": "puente-backend",
+  "version": "1.0.0",
+  "description": "API REST de Puente: catálogo de recursos gratuitos para aprender inglés (Express + MySQL + JWT)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:init": "node db/inicializar.js",
+    "prueba:api": "node pruebas/probar-api.js"
+  },
+  "keywords": [
+    "express",
+    "api-rest",
+    "jwt",
+    "mysql",
+    "ingles"
+  ],
+  "author": "Derek Joan Ramos del Ángel",
+  "license": "ISC",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.24.6"
+  }
+}
