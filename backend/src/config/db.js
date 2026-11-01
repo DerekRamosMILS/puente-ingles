@@ -25,6 +25,11 @@ export const pool = mysql.createPool({
   timezone: 'Z',
 });
 
+// Cada conexión trabaja en UTC: así las fechas coinciden entre MySQL local y la nube
+pool.on('connection', (conexion) => {
+  conexion.query("SET time_zone = '+00:00'");
+});
+
 export async function probarConexion() {
   const [filas] = await pool.query('SELECT 1 AS ok');
   return filas[0].ok === 1;
